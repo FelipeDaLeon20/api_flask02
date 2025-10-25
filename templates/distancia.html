@@ -1,4 +1,13 @@
 {% extends "layaout.html" %}
+{% import "_macros.html" as datos_macro %}
 {%block container%}
     <h1>Distancia</h1>
+    <form action="" method="POST">
+        {{datos_macro.datos('x1','Ingresa el numero x1')}}
+        {{datos_macro.datos('x2','Ingresa el numero x2')}}
+        {{datos_macro.datos('y1','Ingresa el numero y1')}}
+        {{datos_macro.datos('y2','Ingresa el numero y2')}}
+        <button type="submit" class="btn btn-primary" >Calcular</button>
+    </form>
+    <h1> la distancia entre los puntos es {{res}}</h1>
     {% endblock %}

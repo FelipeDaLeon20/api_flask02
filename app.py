@@ -1,4 +1,5 @@
-from flask import Flask, render_template as render
+from flask import Flask, render_template as render, request
+import math
 app = Flask(__name__)
 
 @app.route('/index')
@@ -7,12 +8,40 @@ def home():
     listado = ['Python','Flask,','Jinja2','HTML','CSS']
     return render('index.html',titulo=titulo,listado=listado)
 
-@app.route('/calculos')
+@app.route('/calculos',methods=('GET','POST'))
 def about():
+    if request.method == 'POST':
+        numero1 = request.form['numero1']
+        numero2 = request.form['numero2']
+        operacion = request.form['operacion']
+        if operacion == 'suma':
+            res = int(numero1) + int(numero2)
+            nOp='suma'
+        if operacion == 'resta':
+            res = int(numero1) - int(numero2)
+            nOp='resta'
+        if operacion == 'multiplicacion':
+            res = int(numero1) * int(numero2)
+            nOp='multiplicacion'
+        if operacion == 'division':
+            res = int(numero1) / int(numero2)
+            nOp='division'
+        return render('calculos.html', res=res,numero1=numero1,numero2=numero2,nOp=nOp)
     return render('calculos.html')
 
-@app.route('/distancia')
+    return render('calculos.html')
+
+@app.route('/distancia',methods=('GET','POST'))
 def distancia():
+    if request.method == 'POST':
+        x1 = request.form['x1']
+        x2 = request.form['x2']
+        y1 = request.form['y1']
+        y2 = request.form['y2']
+        difx = int(x2)-int(x1)
+        dify = int(y2)-int(y1)
+        res = math.sqrt((difx*difx) + (dify*dify))
+        return render('distancia.html', x1=x1,x2=x2,y1=y1,y2=y2,difx=difx,dify=dify,res=res)
     return render('distancia.html')
 
 @app.route('/user/<string:user>')
